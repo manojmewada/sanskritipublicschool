@@ -117,6 +117,7 @@ pyhanko-certvalidator==0.20.0
 PyJWT==2.3.0
 pyparsing==3.0.9
 pypdf==3.4.1
+pypiwin32==223
 pypng==0.20220715.0
 pyproject_api==1.1.1
 pytest==7.1.3
