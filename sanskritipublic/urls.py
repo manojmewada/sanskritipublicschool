@@ -6,7 +6,6 @@ from django.conf.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 import accounts.views as account_view
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,5 +32,5 @@ urlpatterns = [
     path('timetable/', include('timetable.urls')),
     path('deletedetails/', include('deletedetails.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += staticfiles_urlpatterns()
+
  
