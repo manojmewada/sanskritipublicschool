@@ -1,0 +1,1 @@
+web: gunicorn sanskritipublic.wsgi --log-file -
