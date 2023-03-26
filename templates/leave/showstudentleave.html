@@ -1,0 +1,33 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Leaves Status
+{% endblock %}
+{% block content %}
+{% include "message.html" %}
+<div class="container-fluid">
+    <h2 class="text-center my-4">Show Leaves Status </h2>
+    {% if leaves %}
+    {% for leave in leaves %}
+    <div class="container border border-dark mb-3 p-0 bg-dark pb-1 text-white">
+        <div class="row justify-content-around bg-secondary m-0 py-1">
+            <p class="col"><strong>Name</strong>-{{leave.student.fullName}}</p>
+            <p class="col"><strong>Roll No</strong>-{{leave.student.classroomstudent.roll_number}}</p>
+            <p class="col"><strong>Date</strong>-{{leave.date_from}}-{{leave.date_to}}</p>
+            <p class="col"><strong>Subject</strong>-{{leave.subject}}</p>
+            {% if leave.approved%}
+            <p class="col" value="{{leave.approved}}"><strong>Approve</strong></p>
+            {% elif leave.rejected %}
+            <p class="col" value="{{leave.rejected}}"><strong>Reject</strong></p>
+            {% else %}
+            <p class="col" ><strong>Padding</strong></p>
+            {% endif %}
+        </div>
+        <hr>
+       
+    </div>
+    {% endfor %}
+    {% else %}
+    <h4 class="text-center">There are no leaves requests.</h4>
+    {% endif %}
+</div>
+{% endblock %}

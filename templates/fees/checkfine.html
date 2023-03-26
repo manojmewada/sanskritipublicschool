@@ -1,0 +1,23 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Check fine
+{% endblock %}
+{% block content %}
+{% include "message.html" %}
+<div class="container-fluid">
+    <h2 class="text-center my-4">Check Your Fine </h2>
+    {% if Fine %}
+    {% for Fine in Fine %}
+    <div class="container border border-dark mb-3 p-0 bg-dark pb-1 text-white">
+        <p class="px-3 my-2"><strong>Student Name/Section </strong>--{{Fine.student}}</p>
+      Total Fine:-- {{Fine.fine }}<br><br>
+      category:-- {{Fine.category}}<br><br>
+      submissionDate:-- {{Fine.submissionDate}}<br><br>
+      description:-- {{Fine.description}}<br>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h4 class="text-center">There is no Fine  available.</h4>
+    {% endif %}
+</div>
+{% endblock %}

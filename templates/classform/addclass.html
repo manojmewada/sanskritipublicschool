@@ -1,0 +1,33 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Class
+{% endblock %}
+{% block content %}
+{% include "message.html" %}
+<div class="conatiner p-5">
+    <h3 class="">Add Class</h3>
+    <hr class="my-2">
+    <p class="lead">
+        <div class="conatiner w-50">
+            <form action="{% url 'addClass' %} " method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="pr-1" for="">Class:</label>
+                    <input type="text" class="form-control" name="class">
+                </div>
+                <div class="form-group">
+                    <label for="">Class Section</label>
+                    <input type="text" class="form-control" name="section">
+                </div>
+                    <div class="form-group">
+                    <label class="pr-1" for="">Room No:</label>
+                    <input type="text" class="form-control" name="room_no">
+                     </div>
+                <div class="row justify-content-left">
+                    <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </p>
+</div>
+{% endblock %}

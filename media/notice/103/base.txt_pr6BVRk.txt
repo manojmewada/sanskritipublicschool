@@ -1,0 +1,760 @@
+<html lang="en">
+    <head>
+        {% load static %}
+        <title>{% block title %}Dashboard{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Dosis|Candal' rel='stylesheet' type='text/css'>
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+    
+        *{
+            list-style: none;
+            text-decoration: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Dosis', 'Candal', sans-serif ;
+        }
+        body
+        {
+            background: #f5f6fa;
+        
+        }
+    
+        .wrapper .sidebar
+        {
+            background: rgb(5, 68, 104);
+            position: fixed;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 225px;
+            height:100%;
+            padding: 20px 0;
+            transition: all 0.5s ease;
+        }
+        .wrapper .sidebar .profile{
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .wrapper .sidebar .profile img{
+            display: block;
+            width: 140px;
+            height: 140px;
+            border-radius: 40%;
+            margin: 0 auto;
+        }
+    
+        .wrapper .sidebar .profile h3{
+            color: #ffffff;
+            margin: 10px 0 5px;
+        }
+        
+        .wrapper .sidebar .profile p{
+            color: rgb(206, 240, 253);
+            font-size: 14px;
+        }
+        .wrapper .sidebar ul li a{
+            display: block;
+            padding: 13px 30px;
+            border-bottom: 1px solid #10558d;
+            color: rgb(241, 237, 237);
+            font-size: 16px;
+            position: relative;
+        }
+        
+        .wrapper .sidebar ul li a .icon{
+            color: #dee4ec;
+            width: 30px;
+            display: inline-block;
+        }
+        .wrapper .sidebar ul li a:hover,
+        .wrapper .sidebar ul li a.active{
+            color: #0c7db1;
+            background:white;
+            border-right: 2px solid rgb(5, 68, 104);
+        }
+        
+        .wrapper .sidebar ul li a:hover .icon,
+        .wrapper .sidebar ul li a.active .icon{
+            color: #0c7db1;
+        }
+        
+        .wrapper .sidebar ul li a:hover:before,
+        .wrapper .sidebar ul li a.active:before{
+            display: block;
+        }
+        .wrapper .section{
+            width: calc(100% - 225px);
+            margin-left: 225px;
+            transition: all 0.5s ease;
+        }
+        
+        .wrapper .section .top_navbar{
+            background: rgb(7, 105, 185);
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+        
+        }
+    
+        .wrapper .section .top_navbar .hamburger a{
+            font-size: 28px;
+            color: #f4fbff;
+        }
+        
+        .wrapper .section .top_navbar .hamburger a:hover{
+            color: #a2ecff;
+        }
+        body.active .wrapper .sidebar{
+            left: -225px;
+        }
+        
+        body.active .wrapper .section{
+            margin-left: 0;
+            width: 100%;
+        }
+        .user-info{
+            color:white;
+            padding-top:7px;
+        }
+        
+        ul li.active a{
+            color: cyan;
+            background: #1e1e1e;
+            border-left-color: cyan;
+            
+        }
+        ul li a:hover{
+            background: #1e1e1e;
+        }
+        ul ul{
+            position: static;
+            display: none;
+        }
+        ul .feat-shows.show{
+            display: block;
+        }
+        ul .feat-showe.show{
+            display: block;
+        }
+        ul .feat-show1.show{
+            display: block;
+        }
+        ul .feat-show2.show{
+            display: block;
+        }
+        ul .feat-show3.show{
+            display: block;
+        }
+        ul .feat-showt.show{
+            display: block;
+        }
+        ul .feat-showc.show{
+            display: block;
+        }
+        ul .feat-showf.show{
+            display: block;
+        }
+        ul .feat-showti.show{
+            display: block;
+        } ul .feat-show4.show{
+            display: block;
+        }
+        ul .feat-showd.show{
+            display: block;
+        }
+        ul .feat-showtr.show{
+            display: block;
+        }
+        ul .feat-showg.show{
+            display: block;
+        }
+        ul .feat-showv.show{
+            display: block;
+        }
+        ul .serv-show.show1{
+            display: block;
+        }
+        ul ul li{
+            line-height: 42px;
+            border-top: none;
+        }
+        ul ul li a{
+        
+            color: #e6e6e6;
+            padding-left: 80px;
+        }
+        ul li.active ul li a{
+            color: #e6e6e6;
+            background: #1b1b1b;
+            border-left-color: transparent;
+        }
+        ul ul li a:hover{
+            color: cyan!important;
+            background: #1e1e1e!important;
+        }
+        ul li a span{
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            transition: all 0.5s ease;
+            
+        }
+        ul li a span.rotate{
+            transform: translateY(-50%) rotate(-180deg);
+        }
+        .i1{
+            display: block;
+            padding: 13px 30px;
+        
+            font-size: 16px;
+            position: relative;
+        } 
+        </style>
+    </head>
+    <body>
+        <div class="wrapper overflow-auto">
+            <!--Top menu -->
+                <div class="section">
+                        <main class="page-content" style="padding-top: 0;">
+                            <div class="container-fluid" style="padding-left: 0px; padding-right:0px; padding-top:0px;">
+                                <nav class="bg-dark d-flex justify-content-around">
+                                    <div class="hamburger">
+                                        <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+                                            <i class="fas fa-bars fa-2x my-auto"></i>
+                                        </a>
+                                    </div>
+                                    <h2 class=" text-white ml-5">Sanskriti Public School</h2>
+                                    <div class="ml-md-auto d-flex justify-content-around">
+                                        <a href="{% url 'userProfile' %}" class="text-white my-auto ">
+                                            <h4 class="text-white my-auto mr-3">My Profile</h4>
+                                        </a>
+                                        <a href="{% url 'logout' %}" class="text-white mt-2 mr-2">
+                                            <h4>Sign Out</h4>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </div>
+                            {% block content %}
+                            {% endblock content %}
+                        </main>
+                </div>
+                <div class="page-wrapper chiller-theme toggled">
+                    <nav id="sidebar" class="sidebar-wrapper" style="margin-right: 0px; ">
+                        <div class="sidebar-content">
+                            <div class="sidebar col-sm-2 overflow-auto">
+                                <ul class="list-group">
+                                    <!--profile image & text-->
+                                        <div class="profile">
+                                            <div class="sidebar-header">
+                                                    <div class="user-pic">
+                                                        {% if user.userprofile.image %}
+                                                        <img class="img-responsive img-rounded" src="{{ user.userprofile.image.url }}" alt="User picture">
+                                                        {% else %}
+                                                        <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg" alt="User picture">
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="user-info">
+                                                        <span class="user-name">
+                                                            <h5><strong style="text-transform: capitalize;">{{request.user}}</strong><h5>
+                                                        </span> 
+                                                        <span class="user-role">Administrator</span>
+                                                        <span class="user-status">
+                                                            <i class="fa fa-circle"></i>
+                                                            <span>Online</span>
+                                                        </span>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <!--menu item-->
+                                        <div class="page-wrapper chiller-theme toggled">
+                                            <nav id="sidebar" class="sidebar-wrapper" style="margin-right: 0px;">
+                                                <div class="sidebar-content">
+                                                    <div class="sidebar-menu">
+                                                        <li class="header-menu">
+                                                           <a href="{% url 'dashboard' %}">DashBoard Menu</a>
+                                                        </li>
+                                                        {% if user.userprofile.user_type == "Admin" %}
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btne">
+                                                                <i class="fa fa-user">Employees</i>
+                                                                <span class="fas fa-caret-down firste"></span>
+                                                            </a>
+                                                            <div class="sidebar-submenu">
+                                                                <ul class="feat-showe">
+                                                                    <li>
+                                                                        <a href="{% url 'employeeForm' %}">Employee Registration</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'updateEmpInfo' %}">Employee Update</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'empSearchPage' %}">Search Employees</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'empCredentials' %}">Employee Credentials</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                         </li>
+                                                        {% endif %}
+                                                        {% if user.userprofile.user_type != "Student" %}
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btn">
+                                                                <i class="far fa-user-circle i1">Students</i>
+                                                                <span class="fas fa-caret-down first"></span>
+                                                            </a>
+                                                            <div class="sidebar-submenu">
+                                                                <ul  class="feat-shows">
+                                                                    {% if user.userprofile.user_type == "Teacher" %}
+                                                                    <li>
+                                                                        <a href="{% url 'studentList' %}">Check Student Details</a>
+                                                                    </li>
+                                                                    {% elif user.userprofile.user_type == "Admin" %}
+                                                                    <li>
+                                                                        <a href="{% url 'recordForm' %}">Student Registration</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'updateInfo' %}">Student Update</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'searchPage' %}">Search Students</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'studentCredentials' %}">Students Credentials</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'uploadExcelData' %}">Bulk Upload </a>
+                                                                    </li>
+                                                                    {% endif %}
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        {% endif %}
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btn1">
+                                                                <i class="fa fa-file-alt i1">Notice</i>
+                                                                <span class="fas fa-caret-down second"></span>
+                                                            </a>
+                                                            <div class="sidebar-submenu">
+                                                                <ul  class="feat-show1">
+                                                                    {% if user.userprofile.user_type == "Student" %}
+                                                                        <li>
+                                                                            <a href="{% url 'checkStudentNotice' %}">Check Personal Notice
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="{% url 'checkClassNotice' %}">Check Class Notice
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="{% url 'studentClassHomework' %}">Check Homework
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="{% url 'checkSyllabus' %}">Check Syllabus
+                                                                            </a>
+                                                                        </li>
+                                                                        {% else %}
+                                                                        <li>
+                                                                            <a href="{% url 'noticeHome' %}">Notice to Class
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="{% url 'searchStudent' %}">Notice to Student</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="{% url 'homeworkHome' %}">Home Work</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="{% url 'syllabus' %}">Add Syllabus
+                                                                            </a>
+                                                                        </li>
+                                                                    {% endif %}
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btn2">
+                                                                <i class="fa fa-chart-line i1">Attendence</i>
+                                                        
+                                                                <span class="fas fa-caret-down third"></span>
+                                                            </a>
+                                                            <div class="sidebar-submenu">
+                                                                <ul  class="feat-show2">
+                                                                    {% if user.userprofile.user_type == "Admin" %}
+                                                                    <li>
+                                                                        <a href="{% url 'attendenceStudent' %}">Student Attendence</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'piechartStudent' %}">Student Attendence Report</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'attendenceTeacher' %}">Teacher Attendence</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'piechartTeacher' %}">Teacher Attendence Report</a>
+                                                                    </li>
+                                                                    {% elif user.userprofile.user_type == "Student" %}
+                                                                    <li>
+                                                                        <a href="{% url 'piechartStudent' %}">Check Attendence</a>
+                                                                    </li>
+                                                                    {% else %}
+                                                                    <li>
+                                                                        <a href="{% url 'attendenceStudent' %}">Student Attendence</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'piechartTeacher' %}">Check Attendence</a>
+                                                                    </li>
+                                                                    {% endif %}
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btn3">
+                                                                <i class="fas fa-chart-area i1">Marks</i>
+                                                                
+                                                                <span class="fas fa-caret-down fourth"></span>
+                                                            </a>
+                                                            <div class="sidebar-submenu">
+                                                                <ul  class="feat-show3">
+                                                                    {% if user.userprofile.user_type == "Teacher" %}
+                                                                    <li>
+                                                                        <a href="{% url 'addMarks' %}">Add Marks</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'reportStudent' %}">Student Report</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'reportClass' %}">Class Report</a>
+                                                                    </li>
+                                                                    {% elif user.userprofile.user_type == "Student" %}
+                                                                    <li>
+                                                                        <a href="{% url 'studentMarksFilter' %}">Check Marks</a>
+                                                                    </li>
+                                                                    {% else %}
+                                                                    <li>
+                                                                        <a href="{% url 'marksHome' %}">Marks Home</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'reportClass' %}">Class Report</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'reportCard' %}">Report Card</a>
+                                                                    </li>
+                                                                    {% endif %}
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        {% if user.userprofile.user_type == "Student" %}
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btnt">
+                                                                <i class="fas fa-bus i1">Transport</i>
+                                                                <span class="fas fa-caret-down firstt"></span>
+                                                            </a>
+                                                            <div class="sidebar-submenu">
+                                                                <ul class="feat-showt">
+                                                                    <li>
+                                                                        <a href="{% url 'getStudentRoute' %}">Transport Route</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        {% endif %}
+                                                        {% if user.userprofile.user_type == "Admin" %}
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btnc">
+                                                                <i class="fas fa-building i1">Class-Rooms</i>
+                                                                <span class="fas fa-caret-down firstc"></span>
+                                                            </a>
+                                                            <div class="sidebar-submenu">
+                                                                <ul class="feat-showc">
+                                                                    <li>
+                                                                        <a href="{% url 'addClass' %}">Add ClassRoom</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btnti">
+                                                            <i class="fas fa-table i1">Timetable</i>
+                                                                <span class="fas fa-caret-down first"></span>
+                                                            </a>  
+                                                            <div class="sidebar-submenu">
+                                                                <ul class="feat-showti">
+                                                                    <li>
+                                                                        <a href="{% url 'addTimeTableDetail' %}">Add TimeTable Detail</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'viewTimeTableDetialsList' %}">View TimeTable Details</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btnf">
+                                                                <i class="far fa-credit-card i1">Fees</i>
+                                                                <span class="fas fa-caret-down firstf"></span>
+                                                            </a>                        
+                                                            <div class="sidebar-submenu">
+                                                                <ul  class="feat-showf">
+                                                                    <li>
+                                                                        <a href="{% url 'feesHome' %}">Fee Home</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'addFine' %}">Fine</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'addFeeClass' %}">Class Fee Collection</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'searchDefaulter' %}">Search Defaulter</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'feeCollectionReport' %}">Fee Collection Report</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btnd">
+                                                                <i class="fas fa-trash-alt i1">Delete</i>
+                                                                <span class="fas fa-caret-down firstd"></span>
+                                                            </a>
+                                                            <div class="sidebar-submenu">
+                                                                <ul class="feat-showd">
+                                                                    <li>
+                                                                        <a href="{% url 'listStudents' %}">Delete Student Details</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'deletedStudentList' %}">Get Deleted Students Data</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'listEmployees' %}">Delete Employee Details</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'deletedEmployeeList' %}">Get Deleted Employees Data</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btntr">
+                                                                <i class="fas fa-bus i1">Transport</i>
+                                                                <span class="fas fa-caret-down firsttr"></span>
+                                                            </a>
+                                                            <div class="sidebar-submenu">
+                                                                <ul class="feat-showtr">
+                                                                    <li>
+                                                                        <a href="{% url 'addVehicle' %}">Add Vehicle</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'vehicleList' %}">Vehicle List</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'addDriver' %}">Driver</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'routeAttendence' %}">Rout Wise Attendence</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'addRoute' %}">Routes</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'routeReport' %}">Routes Report</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btnv">
+                                                                <i class="fas fa-user i1">Visitors</i>
+                                                                <span class="fas fa-caret-down firstv"></span>
+                                                            </a>
+                                                            <div class="sidebar-submenu">
+                                                                <ul class="feat-showv">
+                                                                    <li>
+                                                                        <a href="{% url 'visitorForm' %}">Add Visitor</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'visitorList' %}">Visitor List</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btng">
+                                                                <i class="far fa-images i1">Gallery</i>
+                                                                <span class="fas fa-caret-down firstg"></span>
+                                                            </a>
+                                                            <div class="sidebar-submenu">
+                                                                <ul class="feat-showg">
+                                                                    <li>
+                                                                        <a href="{% url 'addAlbum' %}">Add Album</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'addPhoto' %}">Add Photo</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'addVideo' %}">Add Video</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        {% endif %}
+                                                        {% if user.userprofile.user_type != "Admin" %}
+                                                        <li class="sidebar-dropdown">
+                                                            <a href="#" class="feat-btn4">
+                                                                <i class="fas fa-check-square i1">Leave</i></i>
+                                                                <span class="fas fa-caret-down fifth"></span>
+                                                            </a>                    
+                                                            <div class="sidebar-submenu">
+                                                                <ul  class="feat-show4">
+                                                                    {% if user.userprofile.user_type == "Student" %}
+                                                                    <li>
+                                                                        <a href="{% url 'studentLeave' %}">Add Leave</a>
+                                                                    </li>
+                                                                    {% else %}
+                                                                    <li>
+                                                                        <a href="{% url 'viewStudentLeaves' %}">Approve/Reject Leaves</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'employeeLeave' %}">Add Leave</a>
+                                                                    </li>
+                                                                    {% endif %}
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        {% endif %}
+                                                        {% if user.userprofile.user_type == "Admin" %}
+                                                        <li class="header-menu">
+                                                                <i class="fa fa-object-group">Others</i>
+                                                            
+                                                        </li>
+                                                        <li>
+                                                            <a href="{% url 'addNewsletter' %}">
+                                                                <i class="fa fa-book"></i>
+                                                                <span>Add Newsletter</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{% url 'addThought' %}">
+                                                                <i class="fa fa-quote-left"></i>
+                                                                <span>Add Thought</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{% url 'addSchoolInfo' %}">
+                                                                <i class="fa fa-info"></i>
+                                                                <span>Add School Info</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{% url 'addHoliday' %}">
+                                                                <i class="fa fa-calendar"></i>
+                                                                <span>Add Holdiay</span>
+                                                            </a>
+                                                        </li>
+                                                        {% endif %}
+                                                        <div class="sidebar-footer">
+                                                            <a href="{% url 'userProfile' %}">
+                                                                <i class="fa fa-cog"></i>
+                                                            </a>
+                                                            <a href="{% url 'logout' %}">
+                                                                <i class="fa fa-power-off"></i>
+                                                            </a>
+                                                        </div>
+                            </ul>
+                        </div>
+                    <!-- sidebar-menu  -->
+                </div>
+            <!-- sidebar-content  -->
+                                                    
+        </nav>
+        <!-- sidebar-wrapper  -->
+        <!-- page-content" -->
+    </div>
+</div>
+      <script>
+            var hamburger = document.querySelector(".hamburger");
+                hamburger.addEventListener("click", function(){
+                    document.querySelector("body").classList.toggle("active");
+                })
+                $('.feat-btn').click(function(){
+                    $('ul .feat-shows').toggleClass("show");
+                    $('ul .first').toggleClass("rotate");
+                });
+                $('.feat-btne').click(function(){
+                    $('ul .feat-showe').toggleClass("show");
+                    $('ul .firste').toggleClass("rotate");
+                });
+                $('.feat-btn1').click(function(){
+                    $('ul .feat-show1').toggleClass("show");
+                    $('ul .second').toggleClass("rotate");
+                });
+                $('.feat-btn2').click(function(){
+                    $('ul .feat-show2').toggleClass("show");
+                    $('ul .third').toggleClass("rotate");
+                });
+                $('.feat-btn3').click(function(){
+                    $('ul .feat-show3').toggleClass("show");
+                    $('ul .fourth').toggleClass("rotate");
+                });
+                $('.feat-btn4').click(function(){
+                    $('ul .feat-show4').toggleClass("show");
+                    $('ul .fifth').toggleClass("rotate");
+                });
+                $('ul li').click(function(){
+                    $(this).addClass("active").siblings().removeClass("active");
+                });
+    
+                $('.feat-btnt').click(function(){
+                    $('ul .feat-showt').toggleClass("show");
+                    $('ul .firstt').toggleClass("rotate");
+                });
+                $('.feat-btnc').click(function(){
+                    $('ul .feat-showc').toggleClass("show");
+                    $('ul .firstc').toggleClass("rotate");
+                });
+                $('.feat-btnti').click(function(){
+                    $('ul .feat-showti').toggleClass("show");
+                    $('ul .firstti').toggleClass("rotate");
+                });
+                $('.feat-btnf').click(function(){
+                    $('ul .feat-showf').toggleClass("show");
+                    $('ul .firstf').toggleClass("rotate");
+                });
+                $('.feat-btnd').click(function(){
+                    $('ul .feat-showd').toggleClass("show");
+                    $('ul .firstd').toggleClass("rotate");
+                });
+                $('.feat-btntr').click(function(){
+                    $('ul .feat-showtr').toggleClass("show");
+                    $('ul .firsttr').toggleClass("rotate");
+                });
+                $('.feat-btnv').click(function(){
+                    $('ul .feat-showv').toggleClass("show");
+                    $('ul .firstv').toggleClass("rotate");
+                });
+                $('.feat-btng').click(function(){
+                    $('ul .feat-showg').toggleClass("show");
+                    $('ul .firstg').toggleClass("rotate");
+                });
+        </script>
+    <!-- page-content" -->
+    </body>
+    </html>

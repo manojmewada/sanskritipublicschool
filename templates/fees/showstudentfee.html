@@ -1,0 +1,53 @@
+
+{% extends "dashboard/base.html" %}
+{% block title %}
+fees report
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<div class="container-fluid">
+    <h2 class="text-center mt-3 ">Get Fees Report</h2>
+    <table class="mb-5 table table-secondary table-striped text-center">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">RegNo</th>
+                <th scope="col">classSection</th>
+                <th scope="col">studentName</th>
+                <th scope="col">Amount</th>
+                <th scope="col">payment method</th>
+                <th scope="col">submissionDate</th>
+                <th scope="col">Month Paid</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fee in fees %}
+        <tr class="">
+            <th scope="row">{{ fee.regNo }}</th>
+            <td>{{ fee.classSection }}</td>
+            <td>{{ fee.student }}</td>
+            <td>{{ fee.amount }}</td>
+            <td>{{ fee.payment_method }}</td>
+            <td>{{ fee.submissionDate }}</td>
+            <td>{{ fee.monthsPaid }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    
+</table>
+</div>
+
+{% endblock content %}

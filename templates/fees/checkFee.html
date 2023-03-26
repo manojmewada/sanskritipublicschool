@@ -1,0 +1,23 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Check Fees
+{% endblock %}
+{% block content %}
+{% include "message.html" %}
+<div class="container-fluid">
+    <h2 class="text-center my-4">Check Your Fees </h2>
+    {% if Fee %}
+    {% for Fee in Fee %}
+    <div class="container border border-dark mb-3 p-0 bg-dark pb-1 text-white">
+        <p class="px-3 my-2"><strong>Fee</strong>-{{Fee.Fee}}</p>
+        {% if Fee.feeSlip %}
+
+        <a href="{{  Fee.feeSlip.url }}" class="my-2 btn btn-info ml-2" download="feeslip">Download Fees Slip</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <h4 class="text-center">There is no Fee Slip available.</h4>
+    {% endif %}
+</div>
+{% endblock %}

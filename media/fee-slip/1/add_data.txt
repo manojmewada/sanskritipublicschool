@@ -1,0 +1,568 @@
+//views form
+
+# Create your views here.
+def form(request):
+    """
+    add student info to student and media path for documents
+    input: form values
+    """
+    if request.method == "POST":
+        # Student Details
+        s_dob = request.POST["sDOB"]
+        if s_dob:
+            s_dob = date(*map(int, s_dob.split('-')))
+        attributes = request.POST.get("attributes", "")
+        f_name = request.POST.get("firstname", "")
+        l_name = request.POST.get("lastname", "")
+        gender = request.POST.get("gender", "")
+        class_section = request.POST.get("classsection", "")
+        add_number = request.POST.get("addmissionnumber", "")
+        academic_year=request.POST.get("academic_year","")
+        admission_date=request.POST.get("admission_date","")
+        DateofBirthWord=request.POST.get("DateofBirthWord","")
+        BankAcNo=request.POST.get("BankAcNo","")
+        IFSCCode=request.POST.get("IFSCCode","")
+        SSSM_ID=request.POST.get("SSSM_ID","")
+        phone_number = request.POST.get("phone_number", "")
+        current_add1 = request.POST.get("currentinputAddress", "")
+        current_add2 = request.POST.get("currentinputAddress2", "")
+        current_city = request.POST.get("inputCity", "")
+        current_state = request.POST.get("inputState", "")
+        current_zip = request.POST.get("inputZip", "")
+        perm_add1 = request.POST.get("perminputAddress", "")
+        perm_add2 = request.POST.get("perminputAddress2", "")
+        perm_city = request.POST.get("perminputCity", "")
+        perm_state = request.POST.get("perminputState", "")
+        perm_zip = request.POST.get("perminputZip", "")
+        religion = request.POST.get("religion", "")
+        caste = request.POST.get("caste", "")
+        tc_number = request.POST.get("tcnumber", "")
+        anumber = request.POST.get("anumber", "")
+        feeCategory = request.POST.get("feeCategory", "")
+        siblingid = request.POST.get("siblingid", "")
+        siblingid0 = request.POST.get("siblingid0", "")
+        siblingid1 = request.POST.get("siblingid1", "")
+        siblingid2 = request.POST.get("siblingid2", "")
+        prevschool_name = request.POST.get("prevschool_name", "")
+        route_code = request.POST.get("route_code", "")
+        stoppage_name = request.POST.get("stoppage_name", "")
+        shift = request.POST.get("shift", "")
+        try:
+            student_info = StudentInfo.objects.create(admissionNumber=add_number)
+        except:
+            messages.error(request, "Admission Number already assigned")
+            return render(request, 'form/recordForm.html', {"routes": Routes.objects.all()})
+        if class_section:
+            # class Section check
+            try:
+                class_room = ClassRoom.objects.get(classSection=class_section)
+                student_info.classSection = class_section
+                student_info.save()
+                ClassRoomStudent.objects.create(
+                    classRoom=class_room, student=student_info)
+            except:
+                messages.error(request, "Class Doesn't Exist")
+                return redirect('recordForm')
+        student_info.firstName = f_name
+        student_info.lastName = l_name
+        student_info.fullName = f_name + " "+l_name
+        student_info.attributes = attributes
+        if s_dob:
+            student_info.dob = s_dob
+        student_info.gender = gender
+        if phone_number:
+            student_info.mobileNumber = phone_number
+        student_info.religion = religion
+        student_info.caste = caste
+        if tc_number:
+            student_info.tcNumber = tc_number
+        if anumber:
+            student_info.aadharNumber = anumber
+        student_info.feeWaiverCategory = feeCategory
+        if academic_year:
+            student_info.academic_year = academic_year
+        if admission_date:
+            student_info.admission_date=admission_date
+            student_info.DateofBirthWord=DateofBirthWord
+            student_info.BankAcNo= BankAcNo
+            student_info.IFSCCode=IFSCCode
+            student_info.SSSM_ID=SSSM_ID
+        if siblingid:
+            student_info.siblingID = siblingid
+        if siblingid0:
+            student_info.siblingID0 = siblingid0
+        if siblingid1:
+            student_info.siblingID1 = siblingid1
+        if siblingid2:
+            student_info.siblingID2 = siblingid2
+        student_info.prevSchoolName = prevschool_name
+        student_info.save()
+
+        # create id and password for student
+        print("Phone nUmber", phone_number)
+        user = User.objects.create_user(
+            username=add_number, password=phone_number)
+        print("Phone nUmber", phone_number)
+        user_profile = UserProfile.objects.create(
+            user=user, fullName=f_name + " " + l_name, addmission_number=add_number, user_type="Student", password=phone_number)
+
+        permanent = PermanentAddress.objects.create(student=student_info)
+        permanent.Address = perm_add1 + perm_add2
+        permanent.Address1 = perm_add1
+        permanent.Address2 = perm_add2
+        permanent.zipCode = perm_zip
+        permanent.state = perm_state
+        permanent.city = perm_city
+
+        current = CurrentAddress.objects.create(student=student_info)
+        current.Address1 = current_add1
+        current.Address = current_add1 + current_add2
+        current.Address2 = current_add2
+        current.zipCode = current_zip
+        current.city = current_city
+        current.state = current_state
+
+        # Parent Details
+        fathers_nid = request.POST.get("fathers_nid")
+        father_name = request.POST.get("fathername")
+        mothers_nid = request.POST.get("mothers_nid")
+        mother_name = request.POST.get("mothername")
+        m_dob = request.POST.get("mDOB")
+        f_dob = request.POST.get("fDOB")
+        pphone_number = request.POST.get("pphone_number")
+        alt_pphone_number = request.POST.get("alt_pphone_number")
+        g_qual = request.POST.get("g_qual")
+        pemail = request.POST.get("pemail")
+        m_qual = request.POST.get("m_qual")
+        m_occup = request.POST.get("m_occup")
+        g_occup = request.POST.get("g_occup")
+        if m_dob:
+            mDOB = date(*map(int, m_dob.split('-')))
+        if f_dob:
+            fDOB = date(*map(int, f_dob.split('-')))
+
+        parent_info = ParentInfo.objects.create(student=student_info)
+        parent_info.fatherName = father_name
+        parent_info.motherName = mother_name
+        if f_dob:
+            parent_info.Fatherdob = f_dob
+        if m_dob:
+            parent_info.Motherdob = m_dob
+        if pphone_number:
+            parent_info.MobileNumber = pphone_number
+        if alt_pphone_number:
+            parent_info.altMobileNumber = alt_pphone_number
+        parent_info.gaurdianQual = g_qual
+        parent_info.guardianOccup = g_occup
+        parent_info.email = pemail
+        parent_info.motherQual = m_qual
+        parent_info.motherQual = m_occup
+        parent_info.save()
+
+        # Route details
+
+        if route_code:
+            route = StudentRoute.objects.create(student=student_info)
+            route.route_stoppage = stoppage_name
+            route.shift = shift
+            route.route_code = route_code
+            route.save()
+
+        documents = Documents.objects.create(student=student_info)
+        documents.idProof = request.FILES.get("idproof")
+        documents.photo = request.FILES.get("photgraph")
+        documents.castCertificate = request.FILES.get("castcert")
+        documents.domicile = request.FILES.get("domicile")
+        documents.tc = request.FILES.get("tc")
+        documents.characterCertificate = request.FILES.get("charcert")
+        documents.save()
+        messages.success(request, "Record successfully added")
+
+    return render(request, 'form/recordForm.html', {"routes": Routes.objects.all()})
+
+html page:
+recordForm.html
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Student Info
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+
+
+<style type="text/css" media="print">
+    .no-print {
+        display: none;
+    }
+</style>
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+
+}
+.required::after {
+ content: "*";
+ color: red;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance:textfield;
+}
+#display-none{
+    display: none;
+}
+</style>
+
+<form class="container" id="myForm" method="POST" action={% url 'recordForm' %} enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+
+        <hr>
+        <h3 class="my-2 text-info ">Student Details</h3>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label class="required">Academic_year:</label>
+                <input type="text" class="form-control" id="academic_year"  name="academic_year" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label>admission_date:</label>
+                <input type="date" class="form-control" id="admission_date"  name="admission_date">
+            </div><br>
+            <div class="form-group col-md-4">
+                <label class="required">First Name:</label>
+                <input type="text" class="form-control" id="firstname"  name="firstname" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Last Name:</label>
+                <input type="text" class="form-control" id="lastname"  name="lastname">
+            </div>
+            <div class="form-group col-md-4">
+                <label class="pr-1">Gender:</label>
+                <select name="gender" class="form-control mr-2" id="exampleFormControlSelect2">
+                    <option selected="true" value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row mt-2">
+            <div class="form-group col-md-3">
+                <label>DOB:</label>
+                <input type="date" class="form-control" id="sDOB"  name="sDOB">
+            </div>
+            <div class="form-group col-md-3">
+                <label> DateofBirthWord:</label>
+                <input type="text" class="form-control" id=" DateofBirthWord"  name=" DateofBirthWord">
+            </div>
+
+            <div class="form-group col-md-3">
+                <label>Class Section:</label>
+                <input type="text" class="form-control" id="classsection" name="classsection">
+            </div>
+            <div class="form-group col-md-3">
+                <label class="required">Admission Number:</label>
+                <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber" onwheel="this.blur()" required>
+            </div>
+            <div class="form-group col-md-3">
+                <label class="required">Phone Number:</label>
+                <input min="0" type="text" maxlength="10" pattern="\d{10}" class="form-control" id="phone_number" name="phonenumber" onwheel="this.blur()" required>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="form-row mt-2">
+        <div class="form-group col-md-4">
+            <label>Religion:</label>
+            <input type="text" class="form-control" id="religion" name="religion">
+        </div>
+        
+        <div class="form-group col-md-4">
+            <label>BankAcNo:</label>
+            <input type="number" class="form-control" id="BankAcNo" name="BankAcNo">
+           
+        </div>
+        <div class="form-group col-md-4">
+            <label>IFSCCode:</label>
+            <input type="text" class="form-control" id="IFSCCode" name="IFSCCode">
+        </div>
+        <div class="form-group col-md-4">
+            <label>SSSM_ID:</label>
+            <input type="text" class="form-control" id="SSSM_ID" name="SSSM_ID">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="caste">Caste:</label>
+            <input type="text" class="form-control" id="caste" name="caste">
+        </div>
+    </div>
+    <div class="form-row mt-2">
+        <div class="form-group col-md-6"> <label for="inputAddress">Current Address:</label>
+            <input type="text" class="form-control" id="inputAddress" name="currentinputAddress" placeholder=""></div>
+        <div class="form-group col-md-6">
+            <label for="inputAddress2">Current Address 2:</label>
+            <input type="text" class="form-control" id="inputAddress2" name="currentinputAddress2" placeholder="">
+        </div>
+    </div>
+
+    <div class="form-row mt-2 ">
+        <div class="form-group col-md-6">
+            <label for="inputCity">City:</label>
+            <input type="text" class="form-control" id="inputCity" name="inputCity">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputState">State:</label>
+            <input type="text" class="form-control" id="inputState" name="inputState">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputZip">Pin Code:</label>
+            <input type="text" class="form-control" id="inputZip" name="inputZip">
+        </div>
+    </div>
+
+
+    <div class="custom-control custom-checkbox my-2">
+        <input type="checkbox" class="custom-control-input" name="customCheck1" id="customCheck1"
+            onclick="FillAddress(this.form)">
+        <label class="custom-control-label font-italic font-weight-lighter" for="customCheck1"> Current Address is same
+            as Permanent Address:</label>
+    </div>
+
+    <div class="form-row mt-2 ">
+        <div class="form-group col-md-6"> <label for="preminputAddress">Permanent Address:</label>
+            <input type="text" class="form-control" id="perminputAddress" name="perminputAddress" placeholder=""></div>
+        <div class="form-group col-md-6">
+            <label for="preminputAddress2">Permanent Address 2:</label>
+            <input type="text" class="form-control" id="perminputAddress2" name="perminputAddress2" placeholder="">
+        </div>
+    </div>
+
+    <div class="form-row mt-2">
+        <div class="form-group col-md-6">
+            <label for="inputCity">City:</label>
+            <input type="text" class="form-control" id="perminputCity" name="perminputCity">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputState">State:</label>
+            <input type="text" class="form-control" id="perminputState" name="perminputState">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputZip">Pin Code:</label>
+            <input type="text" class="form-control" id="perminputZip" name="perminputZip">
+        </div>
+    </div>
+    <div class="form-row mt-2">
+        <div class="form-group col-md-4">
+            <label for="tcnumber">Transfer Certificate Number:</label>
+            <input type="number" class="form-control" id="tcnumber" name="tcnumber">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="anumber">Aadhar Number:</label>
+            <input type="number" class="form-control" id="anumber" name="anumber">
+        </div>
+    </div>
+    <div class="form-row mt-2">
+        <div class="form-group col-md-4">
+            <label for="feeCategory">Fee Waiver Category:</label>
+            <input type="text" class="form-control" id="feeCategory" name="feeCategory">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="prevschoolname">Previous School Name:</label>
+            <input type="text" class="form-control" id="prevschoolname" name="prevschoolname">
+        </div>
+        <div class="form-group col" id="sibling-div">
+            <label for="siblingid">Sibling ID:</label>
+            <button type="button" onclick="addSibling()" class="btn btn-outline-secondary btn-sm">Add Sibling</button>
+                    <button type="button" onclick="delSibling()" class="btn btn-outline-danger btn-sm" id="display-none">Delete Sibiling</button>
+            <input type="number" class="form-control" id="siblingid" min="0" name="siblingid">
+        </div>
+        
+    </div>
+
+    <div class="form-row mt-2">
+        <div class="form-group col-md-3">
+            <label class="pr-1" >Route Code:</label>
+            <select name="route_code" class="form-control mr-2">
+                <option selected="true" disabled="disabled" value="a">Select</option>
+                {% for route in routes %}
+                <option value='{{ route.stoppage_id }}'>{{ route.route_code }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="">Stoppage Name:</label>
+            <input type="text" class="form-control" name="stoppage_name">
+        </div>
+        <div class="form-group col-md-4">
+            <label class="pr-1" for="">Shift:</label>
+            <select name="shift" class="form-control mr-2" id="">
+                <option selected="true" value="">Select</option>
+                <option value="Morning">Morning</option>
+                <option value="Afternoon">Afternoon</option>
+            </select>
+        </div>
+    </div>
+
+
+    <h3 class="my-4 text-info border-top border-dark pt-4">Parent/Gaurdian Details </h3>
+    <div class="form-row mt-2">
+        <div class="form-group col-md-3">
+            <label for="fathername">Father/Gaurdian Name:</label>
+            <input type="text" class="form-control" id="fathername"  name="fathername">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="mothername">Mother Name:</label>
+            <input type="text" class="form-control" id="mothername"  name="mothername">
+        </div>
+        <div class="form-group col-md-3">
+            <label>Father DOB:</label>
+            <input type="date" class="form-control" id="fDOB"  name="fDOB">
+        </div>
+        <div class="form-group col-md-3">
+            <label>Mother DOB:</label>
+            <input type="date" class="form-control" id="mDOB"  name="mDOB">
+        </div>
+    </div>
+    <div class="form-row mt-3">
+        <div class="form-group col-md-3">
+            <label>Phone Number:</label>
+            <input min="0" type="text" class="form-control"  maxlength="10" pattern="\d{10}" id="phone_number" name="phone_number">
+        </div>
+        <div class="form-group col-md-3">
+            <label>Alternate Phone Number:</label>
+            <input min="0" type="text" class="form-control"  maxlength="10" pattern="\d{10}" id="alt_phone_number" name="alt_phone_number">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="prevschoolname">E-Mail:</label>
+            <input type="email" class="form-control" aria-describedby="emailHelp" id="pemail" name="pemail">
+        </div>
+    </div>
+    <div class="form-row mt-3">
+        <div class="form-group col-md-4">
+            <label for="mothername">Father/Guardian Qualification:</label>
+            <input type="text" class="form-control" id="g_qual"  name="g_qual">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="mothername">Fahter/Guardian Occuptation:</label>
+            <input type="text" class="form-control" id="g_occup"  name="g_occup">
+        </div>
+    </div>
+    <div class="form-row mt-3">
+        <div class="form-group col-md-5">
+            <label for="mothername">Mother Qualification:</label>
+            <input type="text" class="form-control" id="m_qual"  name="m_qual">
+        </div>
+        <div class="form-group mb-5 col-md-5">
+            <label for="mothername">Mother Occuptation:</label>
+            <input type="text" class="form-control" id="m_occup"  name="m_occup">
+        </div>
+    </div>
+
+
+
+
+    <h3 class="my-4 text-info border-top border-dark pt-4">Documents</h3>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="photgraph">Photograph:</label>
+            <input onchange="ValidateSize(this)" type="file" class="form-control-file no-print " id="photgraph"
+                name="photgraph">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="idproof">ID Proof:</label>
+            <input onchange="ValidateSize(this)" type="file" class="form-control-file no-print " id="idproof"
+                name="idproof">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="castcert">Caste Certificate:</label>
+            <input onchange="ValidateSize(this)" type="file" class="form-control-file no-print " id="castcert"
+                name="castcert">
+        </div>
+    </div>
+
+    <div class="form-row mt-2">
+        <div class="form-group col-md-4">
+            <label for="domicile">Domicile:</label>
+            <input onchange="ValidateSize(this)" type="file" class="form-control-file no-print " id="domicile"
+                name="domicile">
+        </div>
+        <div class="form-group col-md-4">
+            <label onchange="ValidateSize(this)" for="tc">T.C:</label>
+            <input type="file" class="form-control-file" id="tc" name="tc">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="charcert">Character Certificate:</label>
+            <input onchange="ValidateSize(this)" type="file" class="form-control-file no-print " id="charcert"
+                name="charcert">
+        </div>
+    </div>
+
+    <div class="row justify-content-around">
+        <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
+        <a href="{% url 'searchPage' %}" class="btn btn-primary col-4 mt-5"> Print </a>
+    </div>
+
+</form>
+<script>
+    let count = 0;
+    addSibling = () => {
+        div = document.getElementById("sibling-div");
+        btn = document.getElementById("display-none");
+        btn.style.display = "inline-block";
+        input = document.createElement("input");
+        input.type = "text";
+        input.name = `siblingid${count}`;
+        input.id = `siblingid${count}`;
+        input.className = `form-control my-2`;
+        div.appendChild(input);
+        count+=1;
+ }
+ delSibling = () =>{
+    if (count > 0){
+        input = document.getElementById(`siblingid${count-1}`);
+        input.outerHTML = "";
+        count-=1;
+        if (count===0){
+            btn = document.getElementById("display-none");
+        btn.style.display = "none"
+        }
+    }
+    else{
+        btn = document.getElementById("display-none");
+        btn.style.display = "none"
+    }
+ }
+    function FillAddress(f) {
+        console.log(999)
+        if (f.customCheck1.checked == true) {
+            f.perminputAddress.value = f.currentinputAddress.value;
+            f.perminputAddress2.value = f.currentinputAddress2.value;
+            f.perminputCity.value = f.inputCity.value
+            f.perminputState.value = f.inputState.value
+            f.perminputZip.value = f.inputZip.value
+        }
+    }
+
+    function ValidateSize(file) {
+        var FileSize = file.files[0].size / 1024 / 1024; // in MB
+        if (FileSize > 2) {
+            alert('File size exceeds 2 MB !');
+        } else {
+
+        }
+    }
+
+
+</script>
+
+
+</script>
+
+
+{% endblock %}
+-------------------------------------------------------------

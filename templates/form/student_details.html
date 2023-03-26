@@ -1,0 +1,165 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block content %}
+<i><b><h3>{{ student.fullName}}</h3></b></i>
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header">
+                 <i class="fa fa-align-justify"></i> Students Academic Info
+            </div>
+            <div class="card-body">
+                <tbody>
+                    
+                    <tr>
+                       
+                        <td>Academic Year: {{ student.academic_year }}</td>
+                        <br>
+                        <td>Admission Date: {{ student.admission_date }}</td>
+                        <br>
+                        <td>Admission ID: {{ student.admissionNumber }}</td>
+                       
+                        <br>
+                        <td>Section: {{ student.classSection }}</td>
+                        <br>
+                        
+                       
+                    </tr>
+                </tbody>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header">
+                 <i class="fa fa-align-justify"></i> Students Personal Info
+            </div>
+            <div class="card-body">
+
+                <h5>{{ student.fullName }}</h5>
+                <img style="float:right" src="{{ documents.photo.url}}" height="120px" width="120px"/>
+                <br>
+                <tbody>
+                    <tr>
+                        <td>Date of Birth  : {{ student.dob }}</td>
+                        <br>
+                        <td>Date Of Birth(In Word): {{ student.DateofBirthWord }}</td>
+                        <br>
+                        <td>Caste : {{ student.caste }}</td>
+                        <br>
+                       
+                        <td>Address (Permanent):{{cAdd.Address}}</td>
+                        <br>
+                      
+                        <td>Address (Local):{{pAdd.Address}}</td>
+                        <br>
+                       
+                        <td>Last_school_name: {{ student.prevSchoolName}}</td>
+                        <br>
+                        <td>Student_Number: {{student.mobileNumber}}</td>
+                        <br>
+                        
+                        
+                    </tr>
+                </tbody>
+            </div>
+        </div>
+    </div>
+
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-header">
+             <i class="fa fa-align-justify"></i> Student Account Details
+        </div>
+        <div class="card-body">
+            <tbody>
+                <tr>
+                    <td>Bank Account Number: {{ student.BankAcNo}}</td>
+                    <br>
+                    <td>SSSM_ID Number: {{ student.SSSM_ID}}</td>
+                    <br>
+                    <td>IFSC Code: {{student.IFSCCode }}</td>
+                    <br>
+                   
+                    <br>
+                    
+                </tr>
+            </tbody>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                 <i class="fa fa-align-justify"></i> Fathers Info
+            </div>
+            <div class="card-body">
+                <tbody>
+                    <tr>
+                        
+                    
+                        <td>Fathers Name:{{parent.fatherName}}</td>
+                        <br>
+                        <td>Contact Number: {{parent.MobileNumber }}</td>
+                        <br>
+                        <td>Fathers Education:  {{parent.gaurdianQual}}</td>
+                        <br>
+                        <td>Father Occupation: {{ parent.guardianOccup}}</td>
+                        <br>
+                        
+                    </tr>
+                </tbody>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                 <i class="fa fa-align-justify"></i> Mothers Info
+            </div>
+            <div class="card-body">
+                <tbody>
+                    <tr>
+                        
+                       
+                        <td>Mothers Name: {{ parent.motherName }}</td>
+                        <br>
+                        <td>Contact Number: {{ parent.altMobileNumber }}</td>
+                        <br>
+                        <td>Mothers Education: {{ parent.motherQual}}</td>
+                        <br>
+                        <td>Mothers Occupation: {{ parent.motherOccup}}</td>
+                        <br>
+                        <br>
+                    </tr>
+                </tbody>
+            </div>
+        </div>
+    </div>
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-header">
+             <i class="fa fa-align-justify"></i> Student Route
+        </div>
+        <div class="card-body">
+            <tbody>
+                <tr>
+                    <td>route_code: {{ route.route_code}}</td>
+                    <br>
+                    <td>route_stoppage: {{ route.route_stoppage}}</td>
+                    <br>
+                    <td>shift: {{ route.shift}}</td>
+                    <br>
+                   
+                    <br>
+                    
+                </tr>
+            </tbody>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
